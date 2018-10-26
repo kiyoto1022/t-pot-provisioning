@@ -1,0 +1,98 @@
+---
+- hosts: scaleway-tpotservers
+
+  vars:
+    username: honeypotter
+
+  tasks:
+  - name: Run the equivalent of "apt-get update"
+    block:
+      - apt:
+          update_cache: yes
+
+  - name: Install required package
+    block:
+      - apt:
+          name: '{{ packages }}'
+          state: present
+        vars:
+          packages:
+            - git
+            - console-setup
+            - python-setuptools
+            - python-pip
+
+  - name: Install "pexpect" for interactive shell operation
+    block:
+      - pip:
+          name: pyprocess
+      - pip:
+          name: ptyprocess
+      - pip:
+          name: pexpect
+
+  - name: Create user to work with tpot
+    block:
+      - user:
+          name: '{{ username }}'
+          state: present
+      - file: 
+          path: '/home/{{ username }}/.ssh'
+          state: directory
+          owner: '{{ username }}'
+          group: '{{ username }}'
+      - copy:
+          src: /home/ubuntu/.ssh/authorized_keys
+          dest: '/home/{{ username }}/.ssh'
+          owner: '{{ username }}'
+          group: '{{ username }}'
+          remote_src: true
+
+  - name: Autoinstall T-Pot
+    block:
+      - git:
+          repo: https://github.com/dtag-dev-sec/t-pot-autoinstall.git
+          dest: /root/t-pot-autoinstall
+
+      - shell: |
+          cp ~/.bashrc ~/.bashrc_backup
+          sed -i -e "6s:^:#:" ~/.bashrc
+          echo "alias reboot='echo'" > ~/.bash_aliases
+          echo "BASH_ENV=~/.bashrc /bin/bash -O expand_aliases install.sh" > install_hack.sh
+        args:
+          chdir: /root/t-pot-autoinstall
+
+      - expect:
+          command: /bin/bash install_hack.sh
+          responses:
+            'Enter username:': '{{ username }}'
+            'Your choice:': 1
+            'Password:': "potter"
+            'Repeat password:': "potter"
+          timeout: 600
+        args:
+          chdir: /root/t-pot-autoinstall
+
+      - shell: |
+          rm -rf ~/.bashrc
+          mv ~/.bashrc_backup ~/.bashrc
+          rm -rf ~/.bash_aliases
+          rm -rf install_hack.sh
+        args:
+          chdir: /root/t-pot-autoinstall
+
+  - name: Rebooting ...
+    block:
+      - shell: sleep 2 && /sbin/shutdown -r now "Reboot required"
+        async: 1
+        poll: 0
+        ignore_errors: true
+
+  - name: Wait for SSH port up
+    block:
+      - wait_for: 
+          host: '{{ ansible_default_ipv4.address }}'
+          port: 64295
+          state: started
+          delay: 30
+        delegate_to: 127.0.0.1
