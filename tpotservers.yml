@@ -91,7 +91,7 @@
   - name: Wait for SSH port up
     block:
       - wait_for: 
-          host: '{{ ansible_default_ipv4.address }}'
+          host: '{{ inventory_hostname }}'
           port: 64295
           state: started
           delay: 30
