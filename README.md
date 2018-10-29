@@ -1,6 +1,6 @@
 # t-pot-provisioning
 
-Provisioning t-pot on scaleway server with [t-pot-autoinstall](https://github.com/dtag-dev-sec/t-pot-autoinstall)
+Provisioning t-pot on scaleway server with [t-pot-autoinstall](https://github.com/dtag-dev-sec/t-pot-autoinstall) (T-Pot 17.10)
 
 ## Scaleway System Requirement
 | Server Type | Memory | Storage | Image
