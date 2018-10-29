@@ -76,7 +76,7 @@
       - shell: |
           cp ~/.bashrc ~/.bashrc_backup
           sed -i -e "6s:^:#:" ~/.bashrc
-          echo "alias reboot='echo'" > ~/.bash_aliases
+          echo "alias reboot='echo end'" > ~/.bash_aliases
           echo "BASH_ENV=~/.bashrc /bin/bash -O expand_aliases install.sh" > install_hack.sh
         args:
           chdir: /root/t-pot-autoinstall
