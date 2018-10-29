@@ -23,7 +23,16 @@ Rewrite to the ip address of the server instance
 ## Start up the Remote computer
 ssh connection possible
 
-## Use
+## Run
 ```
 # ansible-playbook --private-key=~/.ssh/scaleway/id_rsa -u root -i hosts tpotservers.yml
+```
+## Access Web UI
+```
+https://xx.xx.xx.xx:64297/
+```
+
+## Access ssh
+```
+# ssh -i ~/.ssh/scaleway/id_rsa -p 64295 root@xx.xx.xx.xx
 ```
