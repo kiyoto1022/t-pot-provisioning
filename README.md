@@ -1,6 +1,6 @@
-# tpot_provisioning
+# t-pot-provisioning
 
-Provision T-Pot to scaleway
+Provisioning t-pot on scaleway server with [t-pot-autoinstall](https://github.com/dtag-dev-sec/t-pot-autoinstall)
 
 ## Scaleway System Requirement
 | Server Type | Memory | Storage | Image
@@ -8,7 +8,6 @@ Provision T-Pot to scaleway
 | START1-L | 8GB | 200GB | Ubuntu Xenial |
 
 ## Setup Local Machine
-
 Install Ansible
 ```
 # brew install ansible
@@ -22,11 +21,9 @@ Rewrite to the ip address of the server instance
 ```
 
 ## Start up the Remote computer
-
 ssh connection possible
 
 ## Use
-Run provisioning....
 ```
 # ansible-playbook --private-key=~/.ssh/scaleway/id_rsa -u root -i hosts tpotservers.yml
 ```
