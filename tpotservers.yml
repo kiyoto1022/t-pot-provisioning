@@ -3,6 +3,7 @@
 
   vars:
     username: honeypotter
+    password: potter
 
   tasks:
   - name: Run the equivalent of "apt-get update"
@@ -67,8 +68,8 @@
           responses:
             'Enter username:': '{{ username }}'
             'Your choice:': 1
-            'Password:': "potter"
-            'Repeat password:': "potter"
+            'Password:': '{{ password }}'
+            'Repeat password:': '{{ password }}'
           timeout: 600
         args:
           chdir: /root/t-pot-autoinstall
