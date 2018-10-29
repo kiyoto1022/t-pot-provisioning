@@ -27,12 +27,12 @@ ssh connection possible
 ```
 # ansible-playbook --private-key=~/.ssh/scaleway/id_rsa -u root -i hosts tpotservers.yml
 ```
-## Access Web UI
+## Access
+web
 ```
 https://xx.xx.xx.xx:64297/
 ```
-
-## Access ssh
+ssh
 ```
 # ssh -i ~/.ssh/scaleway/id_rsa -p 64295 root@xx.xx.xx.xx
 ```
