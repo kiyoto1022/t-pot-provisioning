@@ -4,6 +4,7 @@
   vars:
     username: honeypotter
     password: potter
+    disk_device: /dev/vdb
 
   tasks:
   - name: Run the equivalent of "apt-get update"
@@ -31,6 +32,23 @@
           name: ptyprocess
       - pip:
           name: pexpect
+
+  - name: Create a ext4 filesystem on {{ disk_device }}
+    block:
+      - filesystem:
+          fstype: ext4
+          dev: '{{ disk_device }}'
+  
+  - name: Mount T-Pot data
+    block:
+      - file: 
+          path: '/data'
+          state: directory
+      - mount:
+          path: '/data'
+          src: '{{ disk_device }}'
+          fstype: ext4
+          state: mounted
 
   - name: Create user to work with tpot
     block:
