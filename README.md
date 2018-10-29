@@ -15,7 +15,7 @@ Install Ansible
 
 Rewrite to the ip address of the server instance
 ```
-# git clone git@github.com:kiyoto1022/tpot_provisioning.git
+# git clone git@github.com:kiyoto1022/t-pot-provisioning.git
 # cd tpot_provisioning
 # vi hosts
 ```
